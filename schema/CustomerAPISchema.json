@@ -1,0 +1,50 @@
+{
+  "schemaName": "CustomerAPISchema",
+  "source": {
+    "dataSource": "CustomerAPI",
+    "mandatoryParams": [
+      "customer_id",
+      "token"
+    ],
+    "dataSourceType": "api",
+    "apiUrl": "http://127.0.0.1:5001/v1/customers",
+    "httpMethod": "GET"
+  },
+  "globalKey": "customer_id",
+  "namespaces": [
+    {
+      "namespace": "profile",
+      "alias": [],
+      "resultJsonPath": "$.data.profile",
+      "mandatoryKey": "customer_id",
+      "primaryKey": [
+        "customer_id"
+      ],
+      "fields": [
+        {
+          "name": "customer_id",
+          "type": "TEXT",
+          "required": true,
+          "jsonPath": "$.data.profile.customer_id",
+          "aliases": [],
+          "flatten": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "required": true,
+          "jsonPath": "$.data.profile.name",
+          "aliases": [
+            "name"
+          ],
+          "flatten": false
+        },
+        {
+          "name": "loyalty_score",
+          "type": "NUMBER",
+          "jsonPath": "$.data.metrics.loyaltyScore"
+        }
+      ]
+    }
+  ]
+}

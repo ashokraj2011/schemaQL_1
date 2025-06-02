@@ -1,0 +1,46 @@
+{
+  "schemaName": "CustomerOneView",
+  "source": {
+    "dataSource": "Virtual",
+    "dataSourceType": "view",
+    "dbName": "customerDB",
+    "mandatoryParams": ["customer_id","token"],
+    "globalKey": "customer_id",
+
+    "base": {
+      "schema": "CustomerDBSchema",
+      "namespace": "customers",
+      "key": "customer_id"
+    },
+    "joins": [
+      {
+        "schema": "CustomerAPISchema",
+        "namespace": "profile",
+        "cacheKeyPattern": "CustomerOneView::{customer_id}",
+        "key": "customer_id",
+        "type": "left"
+      }
+    ],
+
+    "viewFields": [
+      { "from": "customers.full_name",      "as": "customer_name" },
+      { "from": "profile.loyalty_score",    "as": "loyalty_score" }
+    ]
+  },
+  "globalKey": "customer_id",
+  "namespaces": [
+    {
+      "namespace": "CustomerOneView",
+      "alias": [],
+      "cacheable":        true,
+      "cacheTTL":         300,
+      "cacheKeyPattern":  "CustomerOneView::{customer_id}",
+      "mandatoryKey": "customer_id",
+      "primaryKey": ["customer_id"],
+      "fields": [
+        { "name": "customer_name",  "type": "string" },
+        { "name": "loyalty_score",  "type": "NUMBER" }
+      ]
+    }
+  ]
+}

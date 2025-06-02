@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: generic-framework
+  profiles:
+    active: db,api
+    
+server:
+  port: 8080
+  
+logging:
+  level:
+    root: INFO
+    org.example: DEBUG
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      
+schema:
+  directory: /Users/ashokraj/Downloads/Projects/GenericFramework2/GenericFramework2/schema
+
+# Database Configuration
+db:
+  schemas:
+    customer:
+      name: CustomerDBSchema
+      connection:
+        url: jdbc:postgresql://localhost:5432/customerDB
+        username: postgres
+        password: password
+        driver-class-name: org.postgresql.Driver
+      tables:
+        - accounts
+        - customers
+      schema-file: classpath:schemas/CustomerDBSchema.json
+
+# API Configuration
+api:
+  client:
+    connection-timeout: 5000
+    socket-timeout: 30000
+    
+  schemas:
+    customer:
+      name: CustomerAPISchema
+      base-url: http://127.0.0.1:5001/v1
+      endpoints:
+        get-customer: /customers
+      auth:
+        type: bearer
+        token-url: http://127.0.0.1:5001/oauth/token
+        client-id: client
+        client-secret: secret
+      schema-file: classpath:schemas/CustomerAPISchema.json

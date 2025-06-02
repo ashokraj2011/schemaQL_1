@@ -1,0 +1,30 @@
+{
+  "schemaName": "CustomerOneView",
+  "schemaType": "view",
+
+  "base": {
+    "schema":    "CustomerDBSchema",
+    "namespace": "customers",
+    "key":       "customer_id"
+  },
+
+  "joins": [
+    {
+      "schema":    "CustomerAPISchema",
+      "namespace": "profile",
+      "key":       "customer_id",
+      "type":      "left"
+    }
+  ],
+
+  "fields": [
+    {
+      "from": "customers.full_name",
+      "as":   "customer_name"
+    },
+    {
+      "from": "profile.loyalty_score",
+      "as":   "loyalty_score"
+    }
+  ]
+}

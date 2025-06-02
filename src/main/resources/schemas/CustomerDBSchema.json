@@ -1,0 +1,70 @@
+{
+  "schemaName": "CustomerDBSchema",
+  "source": {
+    "dataSource": "customerdb",
+    "dataSourceType": "Database",
+    "dbName": "customerdb",
+    "mandatoryParams": ["customer_id"]
+  },
+  "globalKey": "customer_id",
+  "namespaces": [
+    {
+      "namespace": "accounts",
+      "alias": ["account"],
+      "mandatoryKey": "customer_id",
+      "primaryKey": ["account_id"],
+      "fields": [
+        {
+          "name": "accountNum",
+          "type": "string",
+          "required": true,
+          "aliases": ["account_number", "acct_num"]
+        },
+        {
+          "name": "balance",
+          "type": "decimal",
+          "required": true,
+          "aliases": ["account_balance", "acct_balance"]
+        },
+        {
+          "name": "customer_id",
+          "type": "integer",
+          "required": true,
+          "aliases": ["cust_id", "id"]
+        }
+      ]
+    },
+    {
+      "namespace": "customers",
+      "alias": ["customer"],
+      "mandatoryKey": "customer_id",
+      "primaryKey": ["customer_id"],
+      "fields": [
+        {
+          "name": "customer_id",
+          "type": "integer",
+          "required": true,
+          "aliases": ["cust_id", "id"]
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "aliases": ["customer_name", "full_name", "first_name", "fname"]
+        },
+        {
+          "name": "last_name",
+          "type": "string",
+          "required": false,
+          "aliases": ["surname", "family_name"]
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "required": true,
+          "aliases": ["email_address", "mail"]
+        }
+      ]
+    }
+  ]
+}

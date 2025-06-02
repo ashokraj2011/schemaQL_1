@@ -1,0 +1,45 @@
+{
+  "schemaName": "CustomerAPISchema",
+  "source": {
+    "dataSource": "CustomerAPI",
+    "dataSourceType": "api",
+    "apiUrl": "http://127.0.0.1:5001/v1/customers",
+    "httpMethod": "GET",
+    "mandatoryParams": ["customer_id"]
+  },
+  "globalKey": "customer_id",
+  "namespaces": [
+    {
+      "namespace": "profile",
+      "alias": ["customer_profile"],
+      "mandatoryKey": "customer_id",
+      "primaryKey": ["customer_id"],
+      "fields": [
+        {
+          "name": "customer_id",
+          "type": "string",
+          "required": true,
+          "aliases": ["cust_id", "id"]
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "aliases": ["customer_name", "full_name"]
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "required": false,
+          "aliases": ["email_address", "mail"]
+        },
+        {
+          "name": "phone",
+          "type": "string",
+          "required": false,
+          "aliases": ["phone_number", "contact"]
+        }
+      ]
+    }
+  ]
+}

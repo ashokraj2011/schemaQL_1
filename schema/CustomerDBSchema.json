@@ -1,0 +1,176 @@
+{
+  "schemaName": "CustomerDBSchema",
+  "source": {
+    "dataSource": "CustomerDB",
+    "dataSourceType": "Database",
+    "dbName": "customerDB",
+    "mandatoryParams": [
+      "customer_id"
+    ]
+  },
+  "globalKey": "customer_id",
+  "namespaces": [
+    {
+      "namespace": "accounts",
+      "alias": [],
+
+      "mandatoryKey": "customer_id",
+      "primaryKey": ["customer_id"],
+      "fields": [
+        {
+          "name": "customer_id",
+          "type": "INTEGER",
+          "required": true,
+          "aliases": [],
+          "flatten": false
+        },
+        {
+          "name": "accountNum",
+          "type": "TEXT",
+          "required": true,
+          "aliases": [],
+          "flatten": false
+        },
+        {
+          "name": "balance",
+          "type": "DECIMAL",
+          "required": true,
+          "aliases": [],
+          "flatten": false
+        },
+        {
+          "name": "account_type",
+          "type": "TEXT",
+          "required": true,
+          "aliases": [],
+          "flatten": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "required": false,
+          "aliases": [],
+          "flatten": false
+        }
+      ]
+    },
+    {
+      "namespace": "customers",
+      "alias": [
+        "user_profile",
+        "customer_table"
+      ],
+      "mandatoryKey": "customer_id",
+      "primaryKey": [
+        "customer_id"
+      ],
+      "accessControl": {
+        "read": [
+          "admin",
+          "analyst"
+        ],
+        "write": [
+          "admin"
+        ]
+      },
+      "fields": [
+        {
+          "name": "customer_id",
+          "type": "integer",
+          "required": true,
+          "aliases": [
+            "cust_id",
+            "id"
+          ]
+        },
+        {
+          "name": "first_name",
+          "type": "string",
+          "required": true,
+          "aliases": [
+            "fname",
+            "given_name"
+          ]
+        },
+        {
+          "name": "last_name",
+          "type": "string",
+          "required": true,
+          "aliases": [
+            "last_name"
+          ]
+        },
+
+        {
+          "name": "full_name",
+          "type": "string",
+          "computed": true,
+          "transformer": {
+            "type": "concat",
+            "fields": ["first_name", "last_name"],
+            "separator": "-"
+          },
+          "aliases": ["name"]
+        }
+      ,
+        {
+          "name": "email",
+          "type": "string",
+          "required": false,
+          "aliases": [
+            "email_address"
+          ],
+          "isSensitive": true,
+          "accessControl": {
+            "read": [
+              "admin",
+              "support"
+            ],
+            "write": [
+              "admin"
+            ]
+          },
+          "transformer": {
+            "type": "mask",
+            "pattern": "(.{2}).*(@.*)",
+            "replaceWith": "$1***$2"
+          }
+        },
+        {
+          "name": "profile_data",
+          "type": "jsonb",
+          "flatten": true,
+          "aliases": [
+            "profile_info"
+          ],
+          "nestedFields": [
+            {
+              "name": "contact",
+              "type": "object",
+              "nestedFields": [
+                {
+                  "name": "phone",
+                  "type": "string",
+                  "isSensitive": true,
+                  "transformer": {
+                    "type": "mask",
+                    "pattern": "(\\d{3})\\d{4}(\\d{3})",
+                    "replaceWith": "$1****$2"
+                  },
+                  "accessControl": {
+                    "read": [
+                      "admin"
+                    ],
+                    "write": [
+                      "admin"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
