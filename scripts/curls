@@ -1,0 +1,87 @@
+curl --request POST \
+  --url http://localhost:8080/api/query \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.2' \
+  --data '{
+  "queries": [
+
+    {
+      "namespace": "accounts",
+      "dataSource": "CustomerDB",
+			  "schema": "CustomerDBSchema",
+      "arguments": { "customer_id": 1 },
+      "fields":   [ "accountNum", "balance" ]
+    },
+    {
+      "namespace": "customers",
+      "dataSource": "CustomerDB",
+      "schema": "CustomerDBSchema",
+      "arguments": { "customer_id":"2" },
+      "fields": [  "name","email" ]
+    },
+		    {
+      "namespace": "profile",
+      "dataSource": "CustomerAPI",
+			"schema":"CustomerAPISchema",
+      "arguments": { "customer_id": "1"  ,"token":      "eyJhbGciOi…"},
+      "fields":   [ "name" ]
+    }
+  ],
+  "includeDataTypes": true
+}'
+
+curl --request POST \
+  --url http://localhost:8080/api/query \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.2' \
+  --data '{
+  "queries": [
+
+    {
+      "namespace": "accounts",
+      "dataSource": "CustomerDB",
+			  "schema": "CustomerDBSchema",
+      "arguments": { "customer_id": 1 },
+      "fields":   [ "accountNum", "balance" ]
+    }
+  ],
+  "includeDataTypes": true
+}
+'
+
+curl --request POST \
+  --url http://localhost:8080/api/query \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/11.0.2' \
+  --data '{
+  "queries":[
+    {
+      "schema":"CustomerOneView",
+      "namespace":"CustomerOneView",
+      "arguments": {
+        "customer_id":"1",
+        "token":"…"
+      },
+      "fields":["customer_name","loyalty_score"]
+    }
+  ],
+  "includeDataTypes": true
+}
+'curl --request POST \
+   --url http://localhost:8080/api/query \
+   --header 'Content-Type: application/json' \
+   --header 'User-Agent: insomnia/11.0.2' \
+   --data '{
+   "queries": [
+
+     {
+       "namespace": "profile",
+       "dataSource": "CustomerAPI",
+ 			"schema":"CustomerAPISchema",
+       "arguments": { "customer_id": "1"  ,"token":      "eyJhbGciOi…"},
+       "fields":   [ "name" ,"loyalty_score"]
+     }
+   ],
+   "includeDataTypes": true
+ }
+ '
